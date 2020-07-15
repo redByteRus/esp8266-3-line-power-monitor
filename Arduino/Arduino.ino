@@ -35,35 +35,37 @@ void loop() {
 }
 
 void updateDisplay(){
-  //loat test = 220.00;
+  String displayStr = "";
 
-  //v1 = 220;
-  
+  displayStr += (formatCell(v1) + " ");
+  displayStr += (formatCell(v2) + " ");
+  displayStr += (formatCell(v3));
+
   lcd.clear();
-  lcd.print( formatCell(v1) + "|");
+  lcd.print( displayStr);
 }
 
 String formatCell(float val) {
   if (isnan(val)){
-    return "  0.0";
+    return "   0.0";
   } 
   else if (val <= 0){
-    return "  0.0";
+    return "   0.0";
   } 
   else if (val < 10){
-    return " " + String(val).substring(0, 4);
+    return "  " + String(val).substring(0, 3);
   } 
   else if (val < 100){
-    return " " + String(val).substring(0, 4);
+    return "  " + String(val).substring(0, 4);
   }
   else if (val < 1000){
-    return String(val).substring(0, 5);
+    return " " + String(val).substring(0, 5);
   }
   else if (val < 10000){
-    return " " + String(val).substring(0, 4);
+    return String(val).substring(0, 6);
   }
   else if (val < 100000){
-    return " " + String(val).substring(0, 4);
+    return " " + String(val).substring(0, 5);
   }
   return String(val);
 }
@@ -72,6 +74,10 @@ void updatePzem(){
   v1 = pzem1.voltage();
   v2 = pzem2.voltage();
   v3 = pzem3.voltage();
+
+  v1 = 0;
+  v2 = 0;
+  v3 = 0;
 
   a1 = pzem1.current();
   a2 = pzem2.current();
