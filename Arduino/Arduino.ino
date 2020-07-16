@@ -1,5 +1,4 @@
 #include <Wire.h>
-#include <math.h>
 #include <PZEM004Tv30.h>
 #include <LiquidCrystal_I2C.h>
 #include <SoftwareSerial.h>
@@ -7,8 +6,6 @@
 LiquidCrystal_I2C lcd(0x3f, 20, 4); //0x27  0x3f, 20, 4
 
 float w1, w2, w3, v1, v2, v3, a1, a2, a3, wh1, wh2, wh3;
-
-String vS1, aS1, wS1, whS1, vS2, aS2, wS2, whS2, vS3, aS3, wS3, whS3;
 
 PZEM004Tv30 pzem1(2, 16);  // (RX,TX) connect to TX,RX of PZEM
 PZEM004Tv30 pzem2(12, 14); 
@@ -41,8 +38,33 @@ void updateDisplay(){
   displayStr += (formatCell(v2) + " ");
   displayStr += (formatCell(v3));
 
-  lcd.clear();
-  lcd.print( displayStr);
+  lcd.setCursor(0,0);
+  lcd.print(displayStr);
+  displayStr = "";
+
+  displayStr += (formatCell(a1) + " ");
+  displayStr += (formatCell(a2) + " ");
+  displayStr += (formatCell(a3));
+
+  lcd.setCursor(0,1);
+  lcd.print(displayStr);
+  displayStr = "";
+  
+  displayStr += (formatCell(w1) + " ");
+  displayStr += (formatCell(w2) + " ");
+  displayStr += (formatCell(w3));
+
+  lcd.setCursor(0,2);
+  lcd.print(displayStr);
+  displayStr = "";
+
+  displayStr += (formatCell(wh1) + " ");
+  displayStr += (formatCell(wh2) + " ");
+  displayStr += (formatCell(wh3));
+
+  lcd.setCursor(0,3);
+  lcd.print(displayStr);
+  displayStr = "";
 }
 
 String formatCell(float val) {
@@ -51,9 +73,9 @@ String formatCell(float val) {
   } 
   else if (val <= 0){
     return "   0.0";
-  } 
+  }
   else if (val < 10){
-    return "  " + String(val).substring(0, 3);
+    return "   " + String(val).substring(0, 3);
   } 
   else if (val < 100){
     return "  " + String(val).substring(0, 4);
@@ -74,10 +96,6 @@ void updatePzem(){
   v1 = pzem1.voltage();
   v2 = pzem2.voltage();
   v3 = pzem3.voltage();
-
-  v1 = 0;
-  v2 = 0;
-  v3 = 0;
 
   a1 = pzem1.current();
   a2 = pzem2.current();
