@@ -3,7 +3,7 @@
 #include <LiquidCrystal_I2C.h>
 #include <SoftwareSerial.h>
 
-LiquidCrystal_I2C lcd(0x3f, 20, 4); //0x27  0x3f, 20, 4
+LiquidCrystal_I2C lcd(0x3f, 20, 4); //Если дисплей не работает, то заменить на 0x27
 
 float w1, w2, w3, v1, v2, v3, a1, a2, a3, wh1, wh2, wh3;
 
